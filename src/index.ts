@@ -1,11 +1,12 @@
-import expres from 'express';
+import express from 'express';
 import cors from 'cors';
 import * as dotenv from 'dotenv';
 import { AppDataSource } from './config/database';
 import cookieParser from 'cookie-parser'
 dotenv.config();
+import authRouter from "./routes/auth.routes";
 
-const app = expres();
+const app = express();
 const PORT = process.env.PORT || 3000;
 
 const corsOptions = {
@@ -15,6 +16,15 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(cookieParser());
+app.use(express.json());
+
+app.use("/api/auth",authRouter)
+
+
+app.use((req, res) => {
+    res.status(404).json({ message: "route not found "});
+})
+
 
 AppDataSource.initialize()
   .then(() => {
