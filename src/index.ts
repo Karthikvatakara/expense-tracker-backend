@@ -4,10 +4,13 @@ import * as dotenv from 'dotenv';
 import { AppDataSource } from './config/database';
 import cookieParser from 'cookie-parser'
 dotenv.config();
+import passport from 'passport';
+import "./config/passport";
 import authRouter from "./routes/auth.routes";
+import expenseRouter from "./routes/expense.routes";
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 
 const corsOptions = {
     origin: process.env.FRONTEND_URL,
@@ -18,8 +21,10 @@ app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(express.json());
 
-app.use("/api/auth",authRouter)
+app.use(passport.initialize());
 
+app.use("/api/auth",authRouter)
+app.use("/api/expense",expenseRouter)
 
 app.use((req, res) => {
     res.status(404).json({ message: "route not found "});

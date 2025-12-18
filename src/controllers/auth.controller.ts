@@ -14,6 +14,7 @@ export class AuthController {
             const { name, email, password } = req.body;
             
             const existingUser = await UserRepo.findOne({ where: { email }})
+           
 
             if(existingUser){
                 return res.status(400).json({message:"email already exist"});
@@ -30,7 +31,7 @@ export class AuthController {
             const token = generateJwt({userId:user.id, email:user.email})
             
             res.cookie("token",token,{ httpOnly:true, maxAge:24*60*60*1000})
-            return res.status(201).json({mesage:"user created succesfully",user});
+            return res.status(201).json({mesage:"user creaated succesfully",user});
         }catch(error){
             console.log("signup error",error);
             return res.status(500).json({message:"server error occured",error:error})
@@ -56,10 +57,20 @@ export class AuthController {
             const token = generateJwt({ userId:existingUser?.id!, email:existingUser?.email!})
 
             res.cookie("token",token,{ httpOnly:true, maxAge:24*60*60*1000});
-            
+
             return res.status(200).json({message:"login succesfull",user:{ id: existingUser?.id,email:existingUser?.email,name:existingUser?.name}})
         }catch(error){
+            console.log(error,"login contrller error")
             return res.status(400).json({message:"internal server error occured"})
+        }
+    }
+
+    static async logout(req:Request,res:Response):Promise<Response>{
+        try{
+            res.clearCookie("token",{ httpOnly: true });
+            return res.status(200).json({message:"logout succesfullt"})
+        }catch(error){
+            return res.status(400).json({message:"internal server error occuresd"})
         }
     }
 }

@@ -6,6 +6,7 @@ import { Request,Response,NextFunction } from "express";
 export const validationMiddleware = (dto:any) => {
     return async ( req: Request, res: Response, next: NextFunction) => {
         const dtoInstance = plainToInstance(dto,req.body);
+     
 
         const errors = await validate(dtoInstance, {
             whitelist: true,

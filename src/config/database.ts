@@ -11,6 +11,7 @@ export const AppDataSource = new DataSource({
   port: parseInt(process.env.DB_PORT || '5433'),
   username: process.env.DB_USERNAME || 'postgres',
   password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_DATABASE || 'expense_tracker',
+  database: process.env.DB_DATABASE || 'expense_tracker_test',
+  synchronize: true,
   entities: [User, Expense],
 });

@@ -20,9 +20,12 @@ export class Expense {
     @Column('date')
     date: Date;
 
-    @ManyToOne(() => User ,(user) => user.expenses)
+    @ManyToOne(() => User ,(user) => user.expenses,{ onDelete: 'CASCADE'})
     @JoinColumn({ name: 'userId' })
     user: User;
+
+    @Column()
+    userId:number;
 
     @CreateDateColumn()
     createdAt:Date;
