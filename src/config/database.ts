@@ -12,6 +12,6 @@ export const AppDataSource = new DataSource({
   username: process.env.DB_USERNAME || 'postgres',
   password: process.env.DB_PASSWORD || '',
   database: process.env.DB_DATABASE || 'expense_tracker_test',
-  synchronize: true,
+//   synchronize: true,
   entities: [User, Expense],
 });
