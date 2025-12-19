@@ -10,7 +10,7 @@ import authRouter from "./routes/auth.routes";
 import expenseRouter from "./routes/expense.routes";
 
 const app = express();
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT;
 
 const corsOptions = {
     origin: process.env.FRONTEND_URL,
